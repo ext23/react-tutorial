@@ -1,46 +1,31 @@
 import React from 'react';
-import { Button, Menu, MenuItem } from '@material-ui/core';
-import reactDom from 'react-dom';
+import ReactDOM from 'react-dom';
+import './index.css';
 
-class AppMenu extends React.Component {
-    render(props) {
-        return <Menu id="appMenu" keepMounted>
-            <MenuItem>Статистика</MenuItem>
-            <MenuItem>Команды</MenuItem>
-            <MenuItem>Выход</MenuItem>
-        </Menu>
-    }
-}
-
-class Team extends React.Component {
+class Toggle extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            name: props.name,        
-        };        
+        this.state = {isToggleOn: true};
+
+        this.handleClick = this.handleClick.bind(this);
     }
 
-    sayHello() {
-        alert("Hello, " + this.state.name + "!");
+    handleClick() {
+        this.setState(state => ({
+            isToogleOn: !state.isToogleOn
+        }));
     }
 
-    render(props) {
-        return <Button color="primary" onClick={()=>this.sayHello()}>{this.props.name}</Button>;
+    render() {
+        return (
+            <button onClick={this.handleClick}>
+                {this.state.isToogleOn ? 'Включено' : 'Выключено'}
+            </button>
+        );
     }
 }
 
-function App() {
-    return (
-        <div>            
-            <AppMenu/>
-            <Team name="GENTLEMEN CARPFISHING CLUB"/>
-            <Team name="AQUA"/>
-            <Team name="OUR BROTHER CARP TEAM"/>        
-        </div>
-    );
-}
-
-reactDom.render(
-    <App />,
+ReactDOM.render(
+    <Toggle />,
     document.getElementById('root')
 );
