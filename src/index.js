@@ -2,30 +2,43 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-class Toggle extends React.Component {
+class FlavorForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {isToggleOn: true};
+        this.state = {value: 'coconut'};
 
-        this.handleClick = this.handleClick.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleClick() {
-        this.setState(state => ({
-            isToogleOn: !state.isToogleOn
-        }));
+    handleChange(event) {
+        this.setState({value: event.target.value});
+    }
+
+    handleSubmit(event) {
+        alert('Ваш любимый вкус: ' + this.state.value)
+        event.preventDefault();
     }
 
     render() {
         return (
-            <button onClick={this.handleClick}>
-                {this.state.isToogleOn ? 'Включено' : 'Выключено'}
-            </button>
+            <form onSubmit={this.handleSubmit}>
+                <label>
+                    Выберите ваш любимый вкус
+                    <select value={this.state.value} onChange={this.handelChange}>
+                        <option value="grapefruit">Грейпфрут</option>
+                        <option value="lime">Лайм</option>
+                        <option value="coconut">Кокос</option>
+                        <option value="mango">Манго</option>
+                    </select>
+                </label>
+                <input type="submit" value="Отправить" />
+            </form>
         );
     }
 }
 
 ReactDOM.render(
-    <Toggle />,
+    <FlavorForm />,
     document.getElementById('root')
 );
